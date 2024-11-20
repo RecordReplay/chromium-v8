@@ -16,6 +16,12 @@
     recordreplay::Assert(format, ##__VA_ARGS__); \
   static_assert(true, "require semicolon")
 
+// Same as |REPLAY_ASSERT| but won't Assert if the given condition is not true.
+#define REPLAY_ASSERT_IF(cond, format, ...) \
+  if (recordreplay::HasAsserts() && (cond)) \
+    recordreplay::Assert(format, ##__VA_ARGS__); \
+  static_assert(true, "require semicolon")
+
 // Same as |REPLAY_ASSERT| but won't Assert when Events are disallowed.
 #define REPLAY_ASSERT_MAYBE_EVENTS_DISALLOWED(format, ...) \
   if (recordreplay::HasAsserts() && !recordreplay::AreEventsDisallowed()) \
